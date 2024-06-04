@@ -36,3 +36,6 @@ if out_of_range.any():
     print("Valori anomali:\n", out_of_range)
 else:
     print('Non ci sono valori anomali')
+
+print('il dataset aggiornato è : ',data)
+
