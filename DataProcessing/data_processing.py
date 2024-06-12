@@ -1,9 +1,5 @@
 import pandas as pd
 
-# Caricare il file CSV
-dataset = 'breast_cancer.csv'
-data = pd.read_csv(dataset)
-
 # Funzione per eliminare i duplicati
 def remove_duplicates(df):
     initial_shape = df.shape
@@ -30,9 +26,8 @@ def handle_missing_values(df):
     return df
 
 # Funzione per gestire i valori anomali
-
 def handle_outliers(df):
-    out_of_range = df.iloc[:, 1:-1].apply(lambda x: (x < 1) | (x > 10)).sum() #iloc seleziona le colonne e lambda controlla se i valori mancanti sono <1 o >10
+    out_of_range = df.iloc[:, 1:-1].apply(lambda x: (x < 1) | (x > 10)).sum()  # iloc seleziona le colonne e lambda controlla se i valori mancanti sono <1 o >10
     if out_of_range.any():
         print("Valori anomali:\n", out_of_range)
         for column in df.columns[1:-1]:  # Escludiamo la prima e l'ultima colonna
@@ -42,19 +37,24 @@ def handle_outliers(df):
         print('Non ci sono valori anomali')
     return df
 
-# Verifica e rimozione duplicati
-data = remove_duplicates(data)
+if __name__ == "__main__":
+    # Caricare il file CSV
+    dataset = 'breast_cancer.csv'
+    data = pd.read_csv(dataset)
 
-# Gestione valori mancanti
-data = handle_missing_values(data)
+    # Verifica e rimozione duplicati
+    data = remove_duplicates(data)
 
-# Gestione valori anomali
-data = handle_outliers(data)
+    # Gestione valori mancanti
+    data = handle_missing_values(data)
 
-# Salvataggio del dataset pulito
-data.to_csv('breast_cancer_cleaned.csv', index=False)
-print('Il dataset aggiornato è stato salvato come breast_cancer_cleaned.csv')
+    # Gestione valori anomali
+    data = handle_outliers(data)
 
-# Visualizzazione del dataset salvato
-cleaned_data = pd.read_csv('breast_cancer_cleaned.csv')
-print(cleaned_data.head())
+    # Salvataggio del dataset pulito
+    data.to_csv('breast_cancer_cleaned.csv', index=False)
+    print('Il dataset aggiornato è stato salvato come breast_cancer_cleaned.csv')
+
+    # Visualizzazione del dataset salvato
+    cleaned_data = pd.read_csv('breast_cancer_cleaned.csv')
+    print(cleaned_data.head())
