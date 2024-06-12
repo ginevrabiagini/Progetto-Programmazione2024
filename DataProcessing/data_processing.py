@@ -32,7 +32,7 @@ def handle_missing_values(df):
 # Funzione per gestire i valori anomali
 
 def handle_outliers(df):
-    out_of_range = df.iloc[:, 1:-1].apply(lambda x: (x < 1) | (x > 10)).sum()
+    out_of_range = df.iloc[:, 1:-1].apply(lambda x: (x < 1) | (x > 10)).sum() #iloc seleziona le colonne e lambda controlla se i valori mancanti sono <1 o >10
     if out_of_range.any():
         print("Valori anomali:\n", out_of_range)
         for column in df.columns[1:-1]:  # Escludiamo la prima e l'ultima colonna
