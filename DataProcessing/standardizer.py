@@ -8,7 +8,7 @@ class Standardizer:
 
     def standardize(self, dataset):
         """
-        Standardizza le features del dataset
+        Standardizza le features del dataset portando la media a 0 e la deviazione standard a 1
 
         Parameters:
         dataset (DataFrame): Il DataFrame contenente il dataset
