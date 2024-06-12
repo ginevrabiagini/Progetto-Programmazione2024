@@ -29,11 +29,11 @@ def main():
     # Caricamento del dataset pulito
     data = pd.read_csv(cleaned_file)
 
-    # Standardizzazione del dataset
+    # Standardizzazione del dataset: creazione di un'istanza della classe 'standardizer'
     standardizer = Standardizer()
-    data_standardized, target = standardizer.standardize(data)
+    data_standardized, target = standardizer.standardize(data) #standardize fa la standardizzazione delle features del dataset
 
-    # Stampa del risultato finale
+    # Stampa del risultato finale, in particolare le prime righe delle features standardizzate e del target
     print("Features standardizzate:")
     print(data_standardized.head())
     print("\nTarget:")
@@ -41,9 +41,10 @@ def main():
 
     # Salvataggio del dataset standardizzato su un file CSV
     standardized_file = 'breast_cancer_standardized.csv'
-    data_standardized['Class'] = target
+    data_standardized['Class'] = target #aggiunge la colonna 'class' (target) al dataset standardizzato
     data_standardized.to_csv(standardized_file, index=False)
     print(f'Il dataset standardizzato è stato salvato come {standardized_file}')
 
+#verifica se il file viene eseguito come script principale e in tal caso chiama la funzione main()
 if __name__ == "__main__":
     main()
