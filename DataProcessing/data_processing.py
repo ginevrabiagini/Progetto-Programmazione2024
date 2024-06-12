@@ -38,4 +38,6 @@ else:
     print('Non ci sono valori anomali')
 
 print('il dataset aggiornato è : ',data)
+
 # data.to_csv('breast_cancer_cleaned.csv', index=False)
+data.to_csv('breast_cancer_cleaned.csv', index=False)

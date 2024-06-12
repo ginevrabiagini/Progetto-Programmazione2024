@@ -1,22 +1,20 @@
 import pandas as pd
 import numpy as np
 
-
-# Classe per la standardizzazione dei valori delle features nel dataset
 class Standardizer:
     """
-    Classe per la standardizzazione dei valori delle features nel dataset.
+    Classe per la standardizzazione dei valori delle features presenti nel dataset
     """
 
     def standardize(self, dataset):
         """
-        Standardizza le features del dataset.
+        Standardizza le features del dataset
 
         Parameters:
-        dataset (DataFrame): Il DataFrame contenente il dataset.
+        dataset (DataFrame): Il DataFrame contenente il dataset
 
         Returns:
-        DataFrame, DataFrame: Il DataFrame con le features standardizzate e la target label.
+        DataFrame, DataFrame: Il DataFrame con le features standardizzate e la target label
         """
         # Standardizzazione delle colonne che non sono 'Class'
         for col in dataset.columns:
@@ -30,13 +28,13 @@ class Standardizer:
 
     def split(self, dataset):
         """
-        Divide il dataset in features e target label.
+        Divide il dataset in features e target label
 
         Parameters:
-        dataset (DataFrame): Il DataFrame contenente il dataset.
+        dataset (DataFrame): Il DataFrame contenente il dataset
 
         Returns:
-        DataFrame, Series: Il DataFrame con le features e il Series con la target label.
+        DataFrame, Series: Il DataFrame con le features e il Series con la target label
         """
         # Seleziona tutte le colonne tranne 'Class' come features
         data = dataset.drop(columns=['Class'])
@@ -45,21 +43,22 @@ class Standardizer:
 
         return data, target
 
+# Caricamento del dataset
+data = pd.read_csv('breast_cancer_cleaned.csv')
 
 # Creazione di un'istanza di Standardizer e standardizzazione del dataset
 standardizer = Standardizer()
 data_standardized, target = standardizer.standardize(data)
 
-# Stampa del risultato
+# Stampa del risultato finale
 print("Features standardizzate:")
 print(data_standardized)
 print("\nTarget:")
 print(target)
 
-# Se desideri salvare il dataset standardizzato su un file CSV
+# Salvataggio del dataset standardizzato su un file CSV
 data_standardized['Class'] = target
 data_standardized.to_csv('breast_cancer_standardized.csv', index=False)
-
 
 
 
