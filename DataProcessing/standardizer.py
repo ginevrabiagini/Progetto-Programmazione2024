@@ -43,6 +43,7 @@ class Standardizer:
 
         return data, target
 
+"""
 # Caricamento del dataset
 data = pd.read_csv('breast_cancer_cleaned.csv')
 
@@ -58,8 +59,4 @@ print(target)
 
 # Salvataggio del dataset standardizzato su un file CSV
 data_standardized['Class'] = target
-data_standardized.to_csv('breast_cancer_standardized.csv', index=False)
-
-
-
-
+data_standardized.to_csv('breast_cancer_standardized.csv', index=False)"" """""
