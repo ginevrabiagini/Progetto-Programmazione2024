@@ -46,5 +46,5 @@ def main():
     print(f'Il dataset standardizzato è stato salvato come {standardized_file}')
 
 #verifica se il file viene eseguito come script principale e in tal caso chiama la funzione main()
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()

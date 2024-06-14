@@ -1,5 +1,4 @@
 import pandas as pd
-
 # Funzione per eliminare i duplicati
 def remove_duplicates(df):
     initial_shape = df.shape

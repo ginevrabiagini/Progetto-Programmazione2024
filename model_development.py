@@ -61,7 +61,7 @@ class KNNClassifier:
 if __name__ == "__main__":
 
     # Caricamento del dataset
-    dataset = pd.read_csv(r"/Users/ginevrabiagini/Desktop/programmazione/Progetto-Programmazione2024/DataProcessing/breast_cancer_standardized.csv")
+    dataset = pd.read_csv("breast_cancer_standardized.csv")
 
 
     X = dataset.drop(columns=['Class']).values
