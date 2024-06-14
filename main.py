@@ -8,17 +8,17 @@ def main():
         print("Usage: python main.py <path_to_csv>")
         sys.exit(1)
 
-    # Caricare il file CSV
+    # Caricamento del file CSV
     dataset = sys.argv[1]
     data = pd.read_csv(dataset)
 
-    # Verifica e rimozione duplicati
+    # Verifica e rimozione dei duplicati
     data = remove_duplicates(data)
 
-    # Gestione valori mancanti
+    # Gestione dei valori mancanti
     data = handle_missing_values(data)
 
-    # Gestione valori anomali
+    # Gestione dei valori anomali
     data = handle_outliers(data)
 
     # Salvataggio del dataset pulito
