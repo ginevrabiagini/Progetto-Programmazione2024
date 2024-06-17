@@ -24,7 +24,16 @@ Class: Classificazione del tumore (2 per benigno, 4 per maligno).
 
 # Esecuzione del codice 
 Per eseguire il codice, è necessario seguire i seguenti passaggi: 
-• Installazione dei requisiti
-• Importazione del dataset: il dataset breast_cancer.csv è già presente nel repository e pronto per l'uso; individuazione di valori anomali, mancanti e rimozione dei duplicati, con conseguente ottenimento dataset nuovo. 
 
+• Installazione dei requisiti
+
+• Importazione del dataset: il dataset breast_cancer.csv è già presente nel repository e pronto per l'uso; individuazione di valori anomali, mancanti e rimozione dei duplicati, con conseguente ottenimento dataset nuovo. 
 Standardizzazione delle features numeriche del dataset; divisione del dataset in features e target label; standardizzazione delle features; salvataggio del dataset standardizzato in un nuovo file CSV.
+
+• Sviluppo del modello: 
+- Sviluppo di un classificatore KNN
+- Numero di vicini (k) da usare nel classificatore KNN. Questo parametro incide su come il modello classifica i nuovi dati basandosi sui dati di addestramento.
+
+• Valutazione del modello: 
+
+
