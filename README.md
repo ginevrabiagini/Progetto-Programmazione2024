@@ -34,6 +34,21 @@ Standardizzazione delle features numeriche del dataset; divisione del dataset in
 - Sviluppo di un classificatore KNN
 - Numero di vicini (k) da usare nel classificatore KNN. Questo parametro incide su come il modello classifica i nuovi dati basandosi sui dati di addestramento.
 
-• Valutazione del modello: 
+• Valutazione del modello:
+- Si può scegliere tra due metodi: Holdout e K-fold Cross Validation. Queste opzioni determinano come vengono valutate le performance del modello.
 
+HOLDOUT: questo metodo divide il dataset in due parti, una per l'addestramento ed una per la fase di test. E' utile quando si ha un dataset di grandi dimensioni.
+
+K-FOLD CROSS VALIDATION: questo metodo divide il dataset in k-fold e utilizza k-1 fold per l'addestramento e 1 fold per il test. E' utile quando si ha un dataset di piccole dimensioni.
+
+- Percentuale di test: è un parametro che determina la percentuale di dati da utilizzare per il test. Questo valore è utilizzato solo se si sceglie Holdout come metodo di valutazione.
+- Numero di fold: è un parametro che determina il numero di fold da utilizzare. Questo valore è utilizzato solo se si sceglie K-fold Cross Validation come metodo di valutazione.
+- Metriche di valutazione: determinano il modo in cui vengono valutate le performance del modello. Si hanno le seguenti metriche:
+  • Accuracy Rate: metrica che indica quante volte il nostro modello ha correttamente classificato un item nel nel nostro dataset rispetto al totale.
+  • Error Rate: metrica che indica quante volte il nostro modello ha erroneamente classificato correttamente un item nel nel nostro dataset rispetto al totale
+  • Sensitivity: metrica che indica la capacità del modello di individuare i casi positivi correttamente.
+  • Specificity: metrica che indica la capacità del modello di individuare i casi negativi corretamente.
+  • Geometric Mean: misura l'equilibrio tra Sensibilità e Specificità.
+
+- Esecuzione del programma: il programma è eseguibile tramite il file main.py, specificando le opzioni di input come argomenti della linea di comando, quando e nella modalità in cui richiesto.
 
