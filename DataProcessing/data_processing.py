@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 # Funzione per eliminare i duplicati
@@ -38,7 +37,7 @@ def handle_outliers(df):
         print('Non ci sono valori anomali')
     return df
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     # Caricare il file CSV
     dataset = 'breast_cancer.csv'
     data = pd.read_csv(dataset)

@@ -43,8 +43,7 @@ class Standardizer:
         target = dataset['Class']
 
         return data, target
-
-"""
+""""
 # Caricamento del dataset
 data = pd.read_csv('breast_cancer_cleaned.csv')
 
