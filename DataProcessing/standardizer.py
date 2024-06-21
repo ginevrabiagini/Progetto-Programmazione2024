@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 class Standardizer:
+
     """
     Classe per la standardizzazione dei valori delle features presenti nel dataset
     """
@@ -43,20 +44,3 @@ class Standardizer:
         target = dataset['Class']
 
         return data, target
-""""
-# Caricamento del dataset
-data = pd.read_csv('breast_cancer_cleaned.csv')
-
-# Creazione di un'istanza di Standardizer e standardizzazione del dataset
-standardizer = Standardizer()
-data_standardized, target = standardizer.standardize(data)
-
-# Stampa del risultato finale
-print("Features standardizzate:")
-print(data_standardized)
-print("\nTarget:")
-print(target)
-
-# Salvataggio del dataset standardizzato su un file CSV
-data_standardized['Class'] = target
-data_standardized.to_csv('breast_cancer_standardized.csv', index=False)"" """""

@@ -1,6 +1,9 @@
 import pandas as pd
 
 # Funzione per eliminare i duplicati
+# Riceve un DataFrame e restituisce un DataFrame senza duplicati
+# Stampa il numero di duplicati rimossi
+
 def remove_duplicates(df):
     initial_shape = df.shape
     df = df.drop_duplicates()
@@ -12,6 +15,9 @@ def remove_duplicates(df):
     return df
 
 # Funzione per gestire i valori mancanti
+# Riceve un DataFrame e restituisce un DataFrame con i valori mancanti sostituiti dalla mediana della colonna
+# Stampa i valori mancanti iniziali e un messaggio dopo la sostituzione
+
 def handle_missing_values(df):
     missing_values = df.isnull().sum()
     if missing_values.any():
@@ -19,13 +25,16 @@ def handle_missing_values(df):
         for column in df.columns:
             if df[column].isnull().sum() > 0:
                 median_value = df[column].median()
-                df[column] = df[column].fillna(median_value)  # Rimuovere inplace=True
+                df[column] = df[column].fillna(median_value)
         print("Valori mancanti sostituiti con la mediana della colonna.")
     else:
         print('Non ci sono valori mancanti')
     return df
 
 # Funzione per gestire i valori anomali
+# Riceve un DataFrame e restituisce un DataFrame con i valori anomali sostituiti dalla mediana della colonna
+# Stampa i valori anomali iniziali e un messaggio dopo la sostituzione
+
 def handle_outliers(df):
     out_of_range = df.iloc[:, 1:-1].apply(lambda x: (x < 1) | (x > 10)).sum()  # iloc seleziona le colonne e lambda controlla se i valori mancanti sono <1 o >10
     if out_of_range.any():
@@ -37,18 +46,20 @@ def handle_outliers(df):
         print('Non ci sono valori anomali')
     return df
 
-if _name_ == "_main_":
-    # Caricare il file CSV
+# Blocco principale
+if __name__ == "__main__":
+
+    # Caricamento del file CSV
     dataset = 'breast_cancer.csv'
     data = pd.read_csv(dataset)
 
     # Verifica e rimozione duplicati
     data = remove_duplicates(data)
 
-    # Gestione valori mancanti
+    # Gestione dei valori mancanti
     data = handle_missing_values(data)
 
-    # Gestione valori anomali
+    # Gestione dei valori anomali
     data = handle_outliers(data)
 
     # Salvataggio del dataset pulito
