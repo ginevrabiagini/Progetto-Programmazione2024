@@ -158,13 +158,13 @@ class Input:
         Verifica se la colonna esiste nel dataset. Stampa un messaggio di errore se la colonna non esiste
         """
         while True:
-            target_column = input("Inserisci il nome della colonna target: ")
+            target_column = input("Inserisci il nome della colonna target(Class) : ")
             if target_column in self.data.columns:
                 self.target_column = target_column
                 break
             else:
                 print(f"Errore: La colonna '{target_column}' non esiste nel dataset.")
-
+(C)
     def get_input(self):
         """
         Chiede all'utente di fornire tutti gli input necessari:
