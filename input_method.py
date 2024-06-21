@@ -164,7 +164,7 @@ class Input:
                 break
             else:
                 print(f"Errore: La colonna '{target_column}' non esiste nel dataset.")
-(C)
+
     def get_input(self):
         """
         Chiede all'utente di fornire tutti gli input necessari:

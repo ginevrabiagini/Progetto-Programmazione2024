@@ -1,6 +1,6 @@
 import pandas as pd
 import sys
-from DataProcessing.data_processing import remove_duplicates, handle_missing_values, handle_outliers
+from DataProcessing.data_processing import DataFrameCleaner  # Importa la nuova classe
 from DataProcessing.standardizer import Standardizer
 from evaluate_holdout import Holdout
 from kfold import KFoldCrossValidation
@@ -25,9 +25,10 @@ def main():
 
     # Esegue il preprocessing dei dati
     try:
-        data = remove_duplicates(data)  # Rimuove i duplicati dal DataFrame
-        data = handle_missing_values(data)  # Gestisce i valori mancanti nel DataFrame
-        data = handle_outliers(data)  # Gestisce i valori anomali nel DataFrame
+        cleaner = DataFrameCleaner(data)  # Inizializza la classe con il DataFrame
+        data = cleaner.remove_duplicates()  # Rimuove i duplicati
+        data = cleaner.handle_missing_values()  # Gestisce i valori mancanti
+        data = cleaner.handle_outliers()  # Gestisce i valori anomali
     except Exception as e:
         print(f"Errore durante il preprocessing delle features: {e}")
         sys.exit(1)
