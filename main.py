@@ -2,49 +2,70 @@ import pandas as pd
 import sys
 from DataProcessing.data_processing import remove_duplicates, handle_missing_values, handle_outliers
 from DataProcessing.standardizer import Standardizer
+from evaluate_holdout import Holdout
+from kfold import KFoldCrossValidation
+from input_method import Input
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python main.py <path_to_csv>")
+    """
+    Funzione principale che gestisce il flusso del programma:
+    - Ottiene i parametri di input dall'utente.
+    - Esegue il preprocessing dei dati (rimozione duplicati, gestione dei valori mancanti e degli outlier).
+    - Standardizza i dati.
+    - Esegue la valutazione del modello utilizzando Holdout o K-Fold Cross Validation.
+    - Stampa e salva i risultati delle metriche.
+    """
+    # Ottiene i parametri di input dall'utente
+    input_params = Input()
+    input_params.get_input()
+
+    data = input_params.data
+    target = data[input_params.target_column]
+    data = data.drop(columns=[input_params.target_column])
+
+    # Esegue il preprocessing dei dati
+    try:
+        data = remove_duplicates(data)  # Rimuove i duplicati dal DataFrame
+        data = handle_missing_values(data)  # Gestisce i valori mancanti nel DataFrame
+        data = handle_outliers(data)  # Gestisce i valori anomali nel DataFrame
+    except Exception as e:
+        print(f"Errore durante il preprocessing delle features: {e}")
         sys.exit(1)
 
-    # Caricamento del file CSV
-    dataset = sys.argv[1]
-    data = pd.read_csv(dataset)
+    # Standardizza i dati
+    try:
+        standardizer = Standardizer()
+        data_standardized, target = standardizer.standardize(pd.concat([data, target], axis=1))
+    except Exception as e:
+        print(f"Errore durante la standardizzazione delle features: {e}")
+        sys.exit(1)
 
-    # Verifica e rimozione dei duplicati
-    data = remove_duplicates(data)
+    # Aggiunge la colonna target ai dati standardizzati
+    data_standardized['Class'] = target
 
-    # Gestione dei valori mancanti
-    data = handle_missing_values(data)
-
-    # Gestione dei valori anomali
-    data = handle_outliers(data)
-
-    # Salvataggio del dataset pulito
-    cleaned_file = 'breast_cancer_cleaned.csv'
-    data.to_csv(cleaned_file, index=False)
-    print(f'Il dataset aggiornato è stato salvato come {cleaned_file}')
-
-    # Caricamento del dataset pulito
-    data = pd.read_csv(cleaned_file)
-
-    # Standardizzazione del dataset: creazione di un'istanza della classe 'standardizer'
-    standardizer = Standardizer()
-    data_standardized, target = standardizer.standardize(data) #standardize fa la standardizzazione delle features del dataset
-
-    # Stampa del risultato finale, in particolare le prime righe delle features standardizzate e del target
-    print("Features standardizzate:")
-    print(data_standardized.head())
-    print("\nTarget:")
-    print(target.head())
-
-    # Salvataggio del dataset standardizzato su un file CSV
+    # Salva il dataset standardizzato su un file CSV
     standardized_file = 'breast_cancer_standardized.csv'
-    data_standardized['Class'] = target #aggiunge la colonna 'class' (target) al dataset standardizzato
     data_standardized.to_csv(standardized_file, index=False)
     print(f'Il dataset standardizzato è stato salvato come {standardized_file}')
 
-#verifica se il file viene eseguito come script principale e in tal caso chiama la funzione main()
+    # Esegue la valutazione del modello
+    try:
+        if input_params.evaluation == 1:
+            holdout_evaluator = Holdout(data_standardized.drop(columns=['Class']), target, input_params.metrics, input_params.k, input_params.training / 100)
+            metrics = holdout_evaluator.evaluate()  # Valutazione del modello con Holdout
+        elif input_params.evaluation == 2:
+            kfold_evaluator = KFoldCrossValidation(data_standardized.drop(columns=['Class']), target, input_params.metrics, input_params.k, input_params.K)
+            metrics = kfold_evaluator.evaluate()  # Valutazione del modello con K-Fold Cross Validation
+        else:
+            print("Metodo di valutazione non valido. Scegliere 1 per Holdout o 2 per KFold Cross Validation.")
+            sys.exit(1)
+    except Exception as e:
+        print(f"Errore durante la valutazione del modello: {e}")
+        sys.exit(1)
+
+    # Stampa le metriche calcolate
+    print("Metrics Calculated:", metrics)
+
+# Verifica se lo script viene eseguito direttamente
 if __name__ == "__main__":
     main()
