@@ -14,17 +14,18 @@ class Standardizer:
         dataset (DataFrame): Il DataFrame contenente il dataset
 
         Returns:
-        DataFrame, DataFrame: Il DataFrame con le features standardizzate e la target label
+        DataFrame, Series: Il DataFrame con le features standardizzate e la target label
         """
-        # Standardizzazione delle colonne che non sono 'Class'
-        for col in dataset.columns:
-            if np.issubdtype(dataset[col].dtype, np.number) and col != 'Class':
-                dataset[col] = (dataset[col] - dataset[col].mean()) / dataset[col].std()
+        # Separa la colonna 'Class' dal resto del dataset
+        target = dataset['Class']
+        features = dataset.drop(columns=['Class'])
 
-        # Divisione del dataset in features (data) e target label (target)
-        data, target = self.split(dataset)
+        # Standardizzazione delle colonne delle features
+        for col in features.columns:
+            if np.issubdtype(features[col].dtype, np.number):
+                features[col] = (features[col] - features[col].mean()) / features[col].std()
 
-        return data, target
+        return features, target
 
     def split(self, dataset):
         """

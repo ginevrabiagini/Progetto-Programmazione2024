@@ -1,4 +1,6 @@
+
 import pandas as pd
+
 # Funzione per eliminare i duplicati
 def remove_duplicates(df):
     initial_shape = df.shape
@@ -18,7 +20,7 @@ def handle_missing_values(df):
         for column in df.columns:
             if df[column].isnull().sum() > 0:
                 median_value = df[column].median()
-                df[column].fillna(median_value, inplace=True)
+                df[column] = df[column].fillna(median_value)  # Rimuovere inplace=True
         print("Valori mancanti sostituiti con la mediana della colonna.")
     else:
         print('Non ci sono valori mancanti')
