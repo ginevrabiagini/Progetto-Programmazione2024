@@ -20,15 +20,12 @@ def main():
     input_params.get_input()
 
     data = input_params.data
-    target = data[input_params.target_column]
-    data = data.drop(columns=[input_params.target_column])
 
     # Esegue il preprocessing dei dati
     try:
-        cleaner = DataFrameCleaner(data)  # Inizializza la classe con il DataFrame
-        data = cleaner.remove_duplicates()  # Rimuove i duplicati
-        data = cleaner.handle_missing_values()  # Gestisce i valori mancanti
-        data = cleaner.handle_outliers()  # Gestisce i valori anomali
+        data = DataFrameCleaner.remove_duplicates(data)  # Rimuove i duplicati
+        data = DataFrameCleaner.handle_missing_values(data)  # Gestisce i valori mancanti
+        data = DataFrameCleaner.handle_outliers(data)  # Gestisce i valori anomali
     except Exception as e:
         print(f"Errore durante il preprocessing delle features: {e}")
         sys.exit(1)
@@ -36,13 +33,10 @@ def main():
     # Standardizza i dati
     try:
         standardizer = Standardizer()
-        data_standardized, target = standardizer.standardize(pd.concat([data, target], axis=1))
+        data_standardized = standardizer.standardize(data)
     except Exception as e:
         print(f"Errore durante la standardizzazione delle features: {e}")
         sys.exit(1)
-
-    # Aggiunge la colonna target ai dati standardizzati
-    data_standardized['Class'] = target
 
     # Salva il dataset standardizzato su un file CSV
     standardized_file = 'breast_cancer_standardized.csv'
@@ -52,10 +46,10 @@ def main():
     # Esegue la valutazione del modello
     try:
         if input_params.evaluation == 1:
-            holdout_evaluator = Holdout(data_standardized.drop(columns=['Class']), target, input_params.metrics, input_params.k, input_params.training / 100)
+            holdout_evaluator = Holdout(data_standardized.drop(columns=[input_params.target_column]), data_standardized[input_params.target_column], input_params.metrics, input_params.k, input_params.training / 100)
             metrics = holdout_evaluator.evaluate()  # Valutazione del modello con Holdout
         elif input_params.evaluation == 2:
-            kfold_evaluator = KFoldCrossValidation(data_standardized.drop(columns=['Class']), target, input_params.metrics, input_params.k, input_params.K)
+            kfold_evaluator = KFoldCrossValidation(data_standardized.drop(columns=[input_params.target_column]), data_standardized[input_params.target_column], input_params.metrics, input_params.k, input_params.K)
             metrics = kfold_evaluator.evaluate()  # Valutazione del modello con K-Fold Cross Validation
         else:
             print("Metodo di valutazione non valido. Scegliere 1 per Holdout o 2 per KFold Cross Validation.")
