@@ -128,3 +128,4 @@ class KFoldCrossValidation:
         # Salva le metriche calcolate
         metrics.save_metrics(output_metrics)
         metrics.metrics_plot(output_metrics)
+        return output_metrics  # Restituisce le metriche calcolate
